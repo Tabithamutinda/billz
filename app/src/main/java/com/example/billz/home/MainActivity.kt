@@ -1,4 +1,4 @@
-package com.example.billz.ui.home
+package com.example.billz.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
