@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Billz</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_registration">Register</string>
 </resources>

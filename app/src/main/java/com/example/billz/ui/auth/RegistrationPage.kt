@@ -17,6 +17,7 @@ class RegistrationPage : AppCompatActivity(){
         binding = ActivityRegistrationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
 //       setContentView(R.layout.activity_registration)
     }
 }

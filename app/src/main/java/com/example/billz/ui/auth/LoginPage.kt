@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.billz.databinding.ActivityLoginBinding
 
@@ -16,6 +17,8 @@ class LoginPage:  AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
 //        setContentView(R.layout.activity_login)
 
