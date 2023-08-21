@@ -1,5 +1,6 @@
 package com.example.billz.ui.auth
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,6 +10,7 @@ import com.example.billz.databinding.ActivityLoginBinding
 class LoginPage:  AppCompatActivity(){
     private val handler = Handler(Looper.getMainLooper())
     lateinit var binding: ActivityLoginBinding
+    lateinit var sharedPrefs: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
