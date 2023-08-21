@@ -2,4 +2,5 @@
     <string name="app_name">Billz</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_registration">Register</string>
+    <string name="title_activity_get_started">Get Started</string>
 </resources>

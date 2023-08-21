@@ -18,7 +18,7 @@ class RegistrationPage : AppCompatActivity(){
         binding = ActivityRegistrationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.registerButton.setOnClickListener{
+        binding.getStartedRegisterButton.setOnClickListener{
             val firstName = binding.firstNameInput.text.toString()
             if(firstName.isEmpty()){
                 binding.firstNameInput.setError("Enter first name")
