@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import com.example.billz.ui.home.MainActivity
 import com.example.billz.R
 
 class SplashScreen:  AppCompatActivity(){
@@ -15,7 +14,7 @@ class SplashScreen:  AppCompatActivity(){
             setContentView(R.layout.activity_splash)
 
             handler.postDelayed({
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, LoginPage::class.java))
                 finish()
             }, 2000)
 
