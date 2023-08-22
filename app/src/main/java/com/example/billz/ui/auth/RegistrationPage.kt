@@ -1,21 +1,26 @@
 package com.example.billz.ui.auth
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
+import com.example.Model.Constants
 import com.example.billz.R
 import com.example.billz.databinding.ActivityLoginBinding
 import com.example.billz.databinding.ActivityRegistrationBinding
 
 class RegistrationPage : AppCompatActivity(){
     private val handler = Handler(Looper.getMainLooper())
+    lateinit var sharedPrefs: SharedPreferences
     lateinit var binding: ActivityRegistrationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegistrationBinding.inflate(layoutInflater)
+        sharedPrefs = getSharedPreferences(Constants.PREFS_FILE, Context.MODE_PRIVATE)
         setContentView(binding.root)
 
         binding.getStartedRegisterButton.setOnClickListener{
