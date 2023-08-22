@@ -21,10 +21,6 @@
             android:exported="false"
             android:label="@string/title_activity_registration"
             android:theme="@style/PageTheme" />
-        <activity
-            android:name=".ui.auth.GetStarted"
-            android:exported="false"
-            android:theme="@style/PageTheme" />
         <activity android:name=".home.MainActivity" />
         <activity
             android:name=".ui.auth.SplashScreen"
