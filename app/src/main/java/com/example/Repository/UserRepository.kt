@@ -14,13 +14,13 @@ import retrofit2.Retrofit
 class UserRepository {
     val retrofit = ApiClient.buildApiClient(ApiInterface::class.java)
     suspend fun registerUser(registrationRequest: RegistrationRequest):
-            Response<RegistrationResponse> = withContext(Dispatchers.IO) {
+            RegistrationResponse = withContext(Dispatchers.IO) {
         var response = retrofit.registerUser(registrationRequest)
         return@withContext response;
     }
 
     suspend fun loginUser(loginRequest: LoginRequest):
-            Response<LoginResponse> = withContext(Dispatchers.IO) {
+            LoginResponse = withContext(Dispatchers.IO) {
                 var response = retrofit.loginUser(loginRequest)
         return@withContext response;
     }
