@@ -34,7 +34,7 @@ class LoginPage:  AppCompatActivity(){
 
         binding.loginButton.setOnClickListener{
             binding.progressBar3.visibility = View.VISIBLE
-
+            binding.loginButton.visibility = View.GONE
             val email = binding.emailInput.text.toString()
             if (email.isEmpty()) {
                 binding.emailInput.setError("Enter email")
@@ -62,11 +62,14 @@ class LoginPage:  AppCompatActivity(){
 
             if (!loginResponse.access_token.isNullOrEmpty()) {
                 binding.progressBar3.visibility = View.VISIBLE
+                binding.loginButton.visibility = View.GONE
                 Toast.makeText(baseContext, "Login successful", Toast.LENGTH_LONG).show()
                 startActivity(Intent(baseContext,MainActivity::class.java))
             }
         }
         userViewModel.loginErrorLiveData.observe(this) { error ->
+            binding.progressBar3.visibility = View.GONE
+            binding.loginButton.visibility = View.VISIBLE
             Toast.makeText(baseContext, error, Toast.LENGTH_SHORT).show()
             startActivity(Intent(baseContext,LoginResponse::class.java))
 

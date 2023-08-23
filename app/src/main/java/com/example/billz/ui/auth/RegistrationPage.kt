@@ -33,6 +33,7 @@ class RegistrationPage : AppCompatActivity() {
 
         binding.getStartedRegisterButton.setOnClickListener {
             binding.progressBar3.visibility = View.VISIBLE
+            binding.getStartedRegisterButton.visibility = View.GONE
             val firstName = binding.firstNameInput.text.toString()
             if (firstName.isEmpty()) {
                 binding.firstNameInput.setError("Enter first name")
@@ -79,14 +80,16 @@ class RegistrationPage : AppCompatActivity() {
 
             if (!regResponse.user.user_id.isNullOrEmpty()) {
                 binding.progressBar3.visibility = View.VISIBLE
+                binding.getStartedRegisterButton.visibility = View.GONE
                 Toast.makeText(baseContext, "Registration successful", Toast.LENGTH_LONG).show()
                 startActivity(Intent(baseContext,MainActivity::class.java))
             }
         }
         userViewModel.regErrorLiveData.observe(this) { error ->
-            binding.progressBar3.visibility = View.VISIBLE
+            binding.progressBar3.visibility = View.GONE
+            binding.getStartedRegisterButton.visibility = View.VISIBLE
             Toast.makeText(baseContext, error, Toast.LENGTH_SHORT).show()
-            startActivity(Intent(baseContext, RegistrationPage::class.java))
+
         }
     }
 }

@@ -11,12 +11,13 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="100dp"
         android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/getStartedRegisterButton"
+        app:layout_constraintBottom_toBottomOf="@+id/getStartedRegisterButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <TextView
         android:id="@+id/createAccount"
@@ -42,138 +43,133 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createAccount" />
 
-    <FrameLayout
-        android:id="@+id/frame1"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/firstNameInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:layout_marginRight="16dp"
-        android:background="#33FFFFFF"
-        android:clipToOutline="true"
-        android:elevation="4dp"
-        android:outlineProvider="background"
-        android:padding="16dp"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fillForm">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/firstNameInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="First Name"
-            android:inputType="text"
-            android:padding="8dp" />
-    </FrameLayout>
+            android:inputType="text" />
 
-    <FrameLayout
-        android:id="@+id/frame2"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lastNameInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:background="#33FFFFFF"
-        android:clipToOutline="true"
         android:layout_marginTop="8dp"
-        android:elevation="4dp"
-        android:outlineProvider="background"
-        android:padding="16dp"
+        android:layout_marginRight="16dp"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frame1">
+        app:layout_constraintTop_toBottomOf="@+id/firstNameInputLayout">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/lastNameInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Last Name"
-            android:inputType="text"
-            android:padding="8dp" />
-    </FrameLayout>
+            android:inputType="text" />
 
-    <FrameLayout
-        android:id="@+id/frame3"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
-        android:background="#33FFFFFF"
-        android:clipToOutline="true"
-        android:elevation="4dp"
-        android:outlineProvider="background"
-        android:padding="16dp"
+        android:layout_marginRight="16dp"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frame2">
+        app:layout_constraintTop_toBottomOf="@+id/lastNameInputLayout">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:padding="8dp" />
-    </FrameLayout>
+            android:hint="Email Address"
+            android:inputType="textEmailAddress" />
 
-    <FrameLayout
-        android:id="@+id/frame4"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/phoneInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
-        android:background="#33FFFFFF"
-        android:clipToOutline="true"
-        android:elevation="4dp"
-        android:outlineProvider="background"
-        android:padding="16dp"
+        android:layout_marginRight="16dp"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frame3">
+        app:layout_constraintTop_toBottomOf="@+id/emailInputLayout">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/phoneInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Phone Number"
-            android:inputType="phone"
-            android:padding="8dp" />
-    </FrameLayout>
+            android:inputType="phone" />
 
-    <FrameLayout
-        android:id="@+id/frame5"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
-        android:background="#33FFFFFF"
-        android:clipToOutline="true"
-        android:elevation="4dp"
-        android:outlineProvider="background"
-        android:padding="16dp"
+        android:layout_marginRight="16dp"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frame4">
+        app:layout_constraintTop_toBottomOf="@+id/phoneInputLayout"
+        app:passwordToggleEnabled="true">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:inputType="text"
-            android:padding="8dp" />
-    </FrameLayout>
+            android:inputType="textEmailAddress" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-
         android:id="@+id/getStartedRegisterButton"
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -186,7 +182,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frame5"
+        app:layout_constraintTop_toBottomOf="@+id/passwordInputLayout"
         app:layout_constraintVertical_bias="0.333" />
 
     <TextView
@@ -196,7 +192,7 @@
         android:layout_marginTop="4dp"
         android:fontFamily="@font/roboto_medium"
         android:text="Joined us before? "
-        android:textSize="15dp"
+        android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.463"
         app:layout_constraintStart_toStartOf="parent"
@@ -211,7 +207,7 @@
         android:fontFamily="@font/roboto_medium"
         android:text="Login"
         android:textColor="@color/orange"
-        android:textSize="15dp"
+        android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/joined"
