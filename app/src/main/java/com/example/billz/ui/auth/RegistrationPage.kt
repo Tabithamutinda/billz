@@ -82,7 +82,8 @@ class RegistrationPage : AppCompatActivity() {
                 binding.progressBar3.visibility = View.VISIBLE
                 binding.getStartedRegisterButton.visibility = View.GONE
                 Toast.makeText(baseContext, "Registration successful", Toast.LENGTH_LONG).show()
-                startActivity(Intent(baseContext,MainActivity::class.java))
+                startActivity(Intent(baseContext,LoginPage::class.java))
+                finish()
             }
         }
         userViewModel.regErrorLiveData.observe(this) { error ->

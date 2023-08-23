@@ -63,8 +63,13 @@ class LoginPage:  AppCompatActivity(){
             if (!loginResponse.access_token.isNullOrEmpty()) {
                 binding.progressBar3.visibility = View.VISIBLE
                 binding.loginButton.visibility = View.GONE
+                val save = sharedPrefs.edit()
+                save.putString("ACCESS_TOKEN", loginResponse.access_token)
+                save.putString("USER_ID", loginResponse.user_id)
+                save.apply()
                 Toast.makeText(baseContext, "Login successful", Toast.LENGTH_LONG).show()
                 startActivity(Intent(baseContext,MainActivity::class.java))
+                finish()
             }
         }
         userViewModel.loginErrorLiveData.observe(this) { error ->
