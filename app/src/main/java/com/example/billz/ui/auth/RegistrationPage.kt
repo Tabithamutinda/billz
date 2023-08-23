@@ -32,28 +32,34 @@ class RegistrationPage : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.getStartedRegisterButton.setOnClickListener {
-            binding.progressBar3.visibility = View.VISIBLE
-            binding.getStartedRegisterButton.visibility = View.GONE
+
             val firstName = binding.firstNameInput.text.toString()
             if (firstName.isEmpty()) {
                 binding.firstNameInput.setError("Enter first name")
+                return@setOnClickListener
             }
             val lastName = binding.lastNameInput.text.toString()
             if (lastName.isEmpty()) {
                 binding.lastNameInput.setError("Enter last name")
+                return@setOnClickListener
             }
             val email = binding.emailInput.text.toString()
             if (email.isEmpty()) {
                 binding.emailInput.setError("Enter email")
+                return@setOnClickListener
             }
             val phone = binding.phoneInput.text.toString()
             if (phone.isEmpty()) {
                 binding.phoneInput.setError("Enter phone number")
+                return@setOnClickListener
             }
             val password = binding.passwordInput.text.toString()
             if (password.isEmpty()) {
                 binding.passwordInput.setError("Enter password")
+                return@setOnClickListener
             }
+            binding.progressBar3.visibility = View.VISIBLE
+            binding.getStartedRegisterButton.visibility = View.GONE
 
             val registerUser = RegistrationRequest(
                 first_name = firstName,

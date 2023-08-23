@@ -33,16 +33,19 @@ class LoginPage:  AppCompatActivity(){
         setContentView(binding.root)
 
         binding.loginButton.setOnClickListener{
-            binding.progressBar3.visibility = View.VISIBLE
-            binding.loginButton.visibility = View.GONE
+
             val email = binding.emailInput.text.toString()
             if (email.isEmpty()) {
                 binding.emailInput.setError("Enter email")
+                return@setOnClickListener
             }
             val password = binding.passwordInput.text.toString()
             if (password.isEmpty()) {
                 binding.passwordInput.setError("Enter password")
+                return@setOnClickListener
             }
+            binding.progressBar3.visibility = View.VISIBLE
+            binding.loginButton.visibility = View.GONE
             val logRequest =
                 LoginRequest(
                     email = email, password = password
