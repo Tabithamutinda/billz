@@ -59,7 +59,7 @@ class LoginPage:  AppCompatActivity(){
         }
 
     }
-    fun redirectUser() {
+    private fun redirectUser() {
         //to check whether the user is logged in or not
         userViewModel.loginResponseLiveData.observe(this) { loginResponse ->
 

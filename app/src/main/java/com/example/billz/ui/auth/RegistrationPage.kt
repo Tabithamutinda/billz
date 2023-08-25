@@ -79,7 +79,7 @@ class RegistrationPage : AppCompatActivity() {
         }
     }
 
-    fun redirectUser() {
+    private fun redirectUser() {
         //to check whether the user is registered or not
 
         userViewModel.registrationResponseLiveData.observe(this) { regResponse ->

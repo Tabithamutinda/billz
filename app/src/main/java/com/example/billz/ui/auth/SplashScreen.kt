@@ -30,7 +30,7 @@ class SplashScreen:  AppCompatActivity(){
 
         }
 
-    fun redirectToAppropriateScreen () {
+    private fun redirectToAppropriateScreen () {
         val isLoggedIn = sharedPrefs.getBoolean("IS_LOGGED_IN", false)
 
             if (isLoggedIn) {
