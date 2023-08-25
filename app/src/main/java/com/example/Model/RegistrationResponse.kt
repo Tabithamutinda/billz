@@ -1,15 +1,21 @@
 package com.example.Model
 
+import com.google.gson.annotations.SerializedName
+
 data class RegistrationResponse(
     val message: String,
     val user: UserData
 )
 
 data class UserData(
-    val phone_number: String,
-    val first_name: String,
-    val user_id: String,
-    val last_name: String,
+    @SerializedName("phone_number")
+    val phoneNumber: String,
+    @SerializedName("first_name")
+    val firstName: String,
+    @SerializedName("user_id")
+    val userId: String,
+    @SerializedName("last_name")
+    val lastName: String,
     val email: String
 )
 

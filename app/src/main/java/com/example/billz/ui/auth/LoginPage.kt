@@ -63,12 +63,12 @@ class LoginPage:  AppCompatActivity(){
         //to check whether the user is logged in or not
         userViewModel.loginResponseLiveData.observe(this) { loginResponse ->
 
-            if (!loginResponse.access_token.isNullOrEmpty()) {
+            if (!loginResponse.accessToken.isNullOrEmpty()) {
                 binding.progressBar3.visibility = View.VISIBLE
                 binding.loginButton.visibility = View.GONE
                 val save = sharedPrefs.edit()
-                save.putString("ACCESS_TOKEN", loginResponse.access_token)
-                save.putString("USER_ID", loginResponse.user_id)
+                save.putString("ACCESS_TOKEN", loginResponse.accessToken)
+                save.putString("USER_ID", loginResponse.userId)
                 save.putBoolean("IS_LOGGED_IN", true)
                 save.apply()
                 Toast.makeText(baseContext, "Login successful", Toast.LENGTH_LONG).show()
