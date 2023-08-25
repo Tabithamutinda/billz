@@ -69,6 +69,7 @@ class LoginPage:  AppCompatActivity(){
                 val save = sharedPrefs.edit()
                 save.putString("ACCESS_TOKEN", loginResponse.access_token)
                 save.putString("USER_ID", loginResponse.user_id)
+                save.putBoolean("IS_LOGGED_IN", true)
                 save.apply()
                 Toast.makeText(baseContext, "Login successful", Toast.LENGTH_LONG).show()
                 startActivity(Intent(baseContext,MainActivity::class.java))
@@ -76,10 +77,12 @@ class LoginPage:  AppCompatActivity(){
             }
         }
         userViewModel.loginErrorLiveData.observe(this) { error ->
+            val save = sharedPrefs.edit()
+            save.putBoolean("IS_LOGGED_IN", false)
+            save.apply()
             binding.progressBar3.visibility = View.GONE
             binding.loginButton.visibility = View.VISIBLE
             Toast.makeText(baseContext, error, Toast.LENGTH_SHORT).show()
-
         }
     }
 
