@@ -79,7 +79,6 @@ class LoginPage:  AppCompatActivity(){
             binding.progressBar3.visibility = View.GONE
             binding.loginButton.visibility = View.VISIBLE
             Toast.makeText(baseContext, error, Toast.LENGTH_SHORT).show()
-            startActivity(Intent(baseContext,LoginResponse::class.java))
 
         }
     }

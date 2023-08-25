@@ -96,7 +96,6 @@ class RegistrationPage : AppCompatActivity() {
             binding.progressBar3.visibility = View.GONE
             binding.getStartedRegisterButton.visibility = View.VISIBLE
             Toast.makeText(baseContext, error, Toast.LENGTH_SHORT).show()
-
         }
     }
 }
