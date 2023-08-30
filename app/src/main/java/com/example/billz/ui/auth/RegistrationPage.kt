@@ -62,10 +62,10 @@ class RegistrationPage : AppCompatActivity() {
             binding.getStartedRegisterButton.visibility = View.GONE
 
             val registerUser = RegistrationRequest(
-                first_name = firstName,
-                last_name = lastName,
+                firstName = firstName,
+                lastName = lastName,
                 email = email,
-                phone_number = phone,
+                phoneNumber = phone,
                 password = password
             )
             userViewModel.registerUser(registerUser)
@@ -79,12 +79,12 @@ class RegistrationPage : AppCompatActivity() {
         }
     }
 
-    fun redirectUser() {
+    private fun redirectUser() {
         //to check whether the user is registered or not
 
         userViewModel.registrationResponseLiveData.observe(this) { regResponse ->
 
-            if (!regResponse.user.user_id.isNullOrEmpty()) {
+            if (!regResponse.user.userId.isNullOrEmpty()) {
                 binding.progressBar3.visibility = View.VISIBLE
                 binding.getStartedRegisterButton.visibility = View.GONE
                 Toast.makeText(baseContext, "Registration successful", Toast.LENGTH_LONG).show()
@@ -96,7 +96,6 @@ class RegistrationPage : AppCompatActivity() {
             binding.progressBar3.visibility = View.GONE
             binding.getStartedRegisterButton.visibility = View.VISIBLE
             Toast.makeText(baseContext, error, Toast.LENGTH_SHORT).show()
-
         }
     }
 }

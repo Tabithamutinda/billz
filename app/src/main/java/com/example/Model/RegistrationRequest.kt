@@ -1,9 +1,14 @@
 package com.example.Model
 
+import com.google.gson.annotations.SerializedName
+
 data class RegistrationRequest(
-    var first_name: String,
-    var last_name: String,
+    @SerializedName("first_name")
+    var firstName: String,
+    @SerializedName("last_name")
+    var lastName: String,
     var email: String,
     var password: String,
-    var phone_number: String
+    @SerializedName("phone_number")
+    var phoneNumber: String
 )
