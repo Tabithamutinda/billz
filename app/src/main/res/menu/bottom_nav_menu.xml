@@ -11,6 +11,11 @@
         android:icon="@drawable/ic_upcoming"
         android:title="Upcoming" />
     <item
+        android:id="@+id/nav_add"
+        android:icon="@drawable/ic_add"
+        android:title=""
+/>
+    <item
         android:id="@+id/nav_paid"
         android:icon="@drawable/ic_paid"
         android:title="Paid" />
