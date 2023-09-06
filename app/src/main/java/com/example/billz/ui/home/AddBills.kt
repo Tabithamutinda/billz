@@ -1,10 +1,15 @@
 package com.example.billz
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import com.example.billz.databinding.FragmentAddBillsBinding
+import java.util.Calendar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,6 +22,8 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class AddBills : Fragment() {
+    private var _binding: FragmentAddBillsBinding? = null
+    private val binding get() = _binding!!
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -34,7 +41,18 @@ class AddBills : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_bills, container, false)
+
+        _binding = FragmentAddBillsBinding.inflate(inflater, container, false)
+//        return inflater.inflate(R.layout.fragment_paid_bills, container, false)
+        return binding.root
+
+        val items = listOf("Material", "Design", "Components", "Android")
+        val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
+
+        (binding.frequencyInput as? AutoCompleteTextView)?.setAdapter(adapter)
+
+
+
     }
 
     companion object {
@@ -55,5 +73,10 @@ class AddBills : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Clean up View Binding
+        _binding = null
     }
 }
