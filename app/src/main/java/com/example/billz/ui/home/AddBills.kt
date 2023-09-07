@@ -9,7 +9,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import com.example.billz.databinding.FragmentAddBillsBinding
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,14 +49,11 @@ class AddBills : Fragment() {
 //        return inflater.inflate(R.layout.fragment_paid_bills, container, false)
         return binding.root
 
-        val items = listOf("Material", "Design", "Components", "Android")
-        val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
-
-        (binding.frequencyInput as? AutoCompleteTextView)?.setAdapter(adapter)
-
 
 
     }
+
+
 
     companion object {
         /**
@@ -78,5 +78,29 @@ class AddBills : Fragment() {
         super.onDestroyView()
         // Clean up View Binding
         _binding = null
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val items = listOf("Material", "Design", "Components", "Android")
+        val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
+        binding.frequencyInput.setAdapter(adapter)
+
+        binding.dueDateInput.setOnClickListener{
+            val datePicker =
+                MaterialDatePicker.Builder.datePicker()
+                    .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                    .setTitleText("Select date")
+                    .build()
+
+
+            datePicker.show(childFragmentManager, null)
+            datePicker.addOnPositiveButtonClickListener {
+                val dateFormat = SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault())
+                binding.dueDateInput.setText(dateFormat.format(it))
+
+            }
+        }
     }
 }

@@ -114,7 +114,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:dropDownHeight="wrap_content"
-            android:completionThreshold="1"
             android:inputType="none"
             android:hint="Bill Frequency"
             />
@@ -145,8 +144,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Due Date"
+            android:focusable="false"
             android:textColorHint="@color/black"
-            android:inputType="date" />
+             />
 
     </com.google.android.material.textfield.TextInputLayout>
 
