@@ -91,7 +91,7 @@ class AddBills : Fragment() {
             val datePicker =
                 MaterialDatePicker.Builder.datePicker()
                     .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-                    .setTitleText("Select Date")
+                    .setTitleText(Calendar.getInstance().get(Calendar.YEAR).toString())
                     .build()
 
 
