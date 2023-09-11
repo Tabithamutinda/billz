@@ -83,7 +83,7 @@ class AddBills : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val items = listOf("Material", "Design", "Components", "Android")
+        val items = listOf("Daily", "Monthly", "Annually")
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         binding.frequencyInput.setAdapter(adapter)
 
@@ -91,7 +91,7 @@ class AddBills : Fragment() {
             val datePicker =
                 MaterialDatePicker.Builder.datePicker()
                     .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-                    .setTitleText("Select date")
+                    .setTitleText("Select Date")
                     .build()
 
 

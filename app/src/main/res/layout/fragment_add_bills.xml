@@ -172,7 +172,7 @@
         android:layout_marginBottom="112dp"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
-        android:text="Add Bill"
+        android:text="Save Bill"
         app:backgroundTint="@color/orange"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
