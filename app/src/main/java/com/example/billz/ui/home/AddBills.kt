@@ -27,6 +27,8 @@ private const val ARG_PARAM2 = "param2"
 class AddBills : Fragment() {
     private var _binding: FragmentAddBillsBinding? = null
     private val binding get() = _binding!!
+    private var selectedFrequency: String = "Weekly"
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -46,13 +48,9 @@ class AddBills : Fragment() {
         // Inflate the layout for this fragment
 
         _binding = FragmentAddBillsBinding.inflate(inflater, container, false)
-//        return inflater.inflate(R.layout.fragment_paid_bills, container, false)
         return binding.root
 
-
-
     }
-
 
 
     companion object {
@@ -74,6 +72,7 @@ class AddBills : Fragment() {
                 }
             }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         // Clean up View Binding
@@ -83,24 +82,83 @@ class AddBills : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val items = listOf("Daily", "Monthly", "Annually")
+        val items = listOf("Weekly", "Monthly", "Annually")
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         binding.frequencyInput.setAdapter(adapter)
 
-        binding.dueDateInput.setOnClickListener{
-            val datePicker =
-                MaterialDatePicker.Builder.datePicker()
-                    .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-                    .setTitleText(Calendar.getInstance().get(Calendar.YEAR).toString())
-                    .build()
+        val daysOfTheWeek = listOf("1", "2", "3", "4", "5", "6", "7")
+        val daysAdapter = ArrayAdapter(requireContext(), R.layout.list_item, daysOfTheWeek)
 
 
-            datePicker.show(childFragmentManager, null)
-            datePicker.addOnPositiveButtonClickListener {
-                val dateFormat = SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault())
-                binding.dueDateInput.setText(dateFormat.format(it))
+        val daysOfTheMonth = listOf(
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30",
+            "31"
+        )
+        val monthAdapter = ArrayAdapter(requireContext(), R.layout.list_item, daysOfTheMonth)
 
+        binding.frequencyInput.setOnItemClickListener { _, _, position, _ ->
+            selectedFrequency = items[position]
+
+            when (selectedFrequency) {
+                "Weekly" -> binding.dueDateInput.setAdapter(daysAdapter)
+                "Monthly" -> binding.dueDateInput.setAdapter(monthAdapter)
+                "Annually" -> {
+                    // Do nothing here; the calendar will be shown in the click listener
+                }
+            }
+
+        }
+
+        binding.dueDateInput.setOnClickListener {
+
+            if (selectedFrequency == "Annually") {
+                // Show a full calendar
+                val datePickerBuilder =
+                    MaterialDatePicker.Builder.datePicker()
+                        .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                        .setTitleText(Calendar.getInstance().get(Calendar.YEAR).toString())
+
+
+                val datePicker = datePickerBuilder.build()
+
+                datePicker.show(childFragmentManager, null)
+                datePicker.addOnPositiveButtonClickListener {
+                    val dateFormat = SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault())
+                    binding.dueDateInput.setText(dateFormat.format(it))
+
+                }
             }
         }
     }
 }
+
+
