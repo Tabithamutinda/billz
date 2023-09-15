@@ -7,6 +7,9 @@ class Constants {
         const val USER_ID="USER_ID"
         const val EMPTY_STRING=""
         const val IS_LOGGED_IN = "IS_LOGGED_IN"
+        const val WEEKLY = "Weekly"
+        const val MONTHLY = "Monthly"
+        const val ANNUAL = "Annual"
     }
 
 }
