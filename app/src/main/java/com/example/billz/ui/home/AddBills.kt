@@ -4,7 +4,6 @@ import BillzViewModel
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -171,7 +170,29 @@ class AddBills : Fragment() {
             }
         }
         binding.addBillButton.setOnClickListener{
-            saveContact()
+            var name = binding.billNameInput.text.toString()
+            var amount = binding.amountInput.text.toString()
+            var frequency = binding.frequencyInput.text.toString()
+            var dueDate = binding.dueDateInput.text.toString()
+            val userId = sharedPrefs.getString(Constants.USER_ID, Constants.EMPTY_STRING)
+
+            if (name.isEmpty()){
+                binding.billNameInput.error = "Enter bill name"
+            }
+            if (amount.isEmpty()){
+                binding.amountInput.error = "Enter bill amount"
+            }
+            if (frequency.isEmpty()){
+                binding.frequencyInput.error = "Choose bill frequency"
+            }
+            if (dueDate.isEmpty()){
+                binding.dueDateInput.error = "Choose bill due date"
+            }
+            binding.progressBar3.visibility = View.VISIBLE
+            var bill = Bill(billId = UUID.randomUUID().toString(), name= name, amount = amount.toDouble(), frequency = frequency, dueDate = dueDate.toString(), userId = userId.toString())
+
+            billzViewModel.saveBill(bill)
+            resetForm()
         }
     }
     private fun saveContact(){
