@@ -1,7 +1,8 @@
-package com.example.database
+package com.example.Repository
 
 import com.example.BillzApp
 import com.example.Model.Bill
+import com.example.database.BillsDb
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
