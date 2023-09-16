@@ -34,7 +34,7 @@ private const val ARG_PARAM2 = "param2"
 class AddBills : Fragment() {
     private var _binding: FragmentAddBillsBinding? = null
     private val binding get() = _binding!!
-    private var selectedFrequency: String = Constants.WEEKLY
+    private var selectedFrequency: Int = 0
     private lateinit var sharedPrefs: SharedPreferences
     val billzViewModel: BillzViewModel by viewModels()
 
@@ -99,7 +99,6 @@ class AddBills : Fragment() {
         val daysOfTheWeek = listOf("1", "2", "3", "4", "5", "6", "7")
         val daysAdapter = ArrayAdapter(requireContext(), R.layout.list_item, daysOfTheWeek)
 
-
         val daysOfTheMonth = listOf(
             "1",
             "2",
@@ -136,63 +135,38 @@ class AddBills : Fragment() {
         val monthAdapter = ArrayAdapter(requireContext(), R.layout.list_item, daysOfTheMonth)
 
         binding.frequencyInput.setOnItemClickListener { _, _, position, _ ->
-            selectedFrequency = items[position]
-
-            when (selectedFrequency) {
-                "Weekly" -> binding.dueDateInput.setAdapter(daysAdapter)
-
-                "Monthly" -> binding.dueDateInput.setAdapter(monthAdapter)
-
-                "Annually" -> {
-                    // Do nothing here; the calendar will be shown in the click listener
-                }
-            }
-
+            selectedFrequency = position
         }
 
         binding.dueDateInput.setOnClickListener {
 
-            if (selectedFrequency == "Annually") {
-                // Show a full calendar
-                val datePickerBuilder =
-                    MaterialDatePicker.Builder.datePicker()
-                        .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-                        .setTitleText(Calendar.getInstance().get(Calendar.YEAR).toString())
+            when (selectedFrequency) {
+                0 -> binding.dueDateInput.setAdapter(daysAdapter)
 
+                1 -> binding.dueDateInput.setAdapter(monthAdapter)
 
-                val datePicker = datePickerBuilder.build()
+                2 -> {
+//                    binding.dueDateInput.setAdapter(null)
+                    // Show a full calendar
+                    val datePickerBuilder =
+                        MaterialDatePicker.Builder.datePicker()
+                            .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                            .setTitleText(Calendar.getInstance().get(Calendar.YEAR).toString())
 
-                datePicker.show(childFragmentManager, null)
-                datePicker.addOnPositiveButtonClickListener {
-                    val dateFormat = SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault())
-                    binding.dueDateInput.setText(dateFormat.format(it))
+                    val datePicker = datePickerBuilder.build()
+
+                    datePicker.show(childFragmentManager, null)
+                    datePicker.addOnPositiveButtonClickListener {
+                        val dateFormat = SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault())
+                        binding.dueDateInput.setText(dateFormat.format(it))
+                    }
                 }
             }
+
         }
         binding.addBillButton.setOnClickListener{
-            var name = binding.billNameInput.text.toString()
-            var amount = binding.amountInput.text.toString()
-            var frequency = binding.frequencyInput.text.toString()
-            var dueDate = binding.dueDateInput.text.toString()
-            val userId = sharedPrefs.getString(Constants.USER_ID, Constants.EMPTY_STRING)
-
-            if (name.isEmpty()){
-                binding.billNameInput.error = "Enter bill name"
-            }
-            if (amount.isEmpty()){
-                binding.amountInput.error = "Enter bill amount"
-            }
-            if (frequency.isEmpty()){
-                binding.frequencyInput.error = "Choose bill frequency"
-            }
-            if (dueDate.isEmpty()){
-                binding.dueDateInput.error = "Choose bill due date"
-            }
             binding.progressBar3.visibility = View.VISIBLE
-            var bill = Bill(billId = UUID.randomUUID().toString(), name= name, amount = amount.toDouble(), frequency = frequency, dueDate = dueDate.toString(), userId = userId.toString())
-
-            billzViewModel.saveBill(bill)
-            resetForm()
+            saveContact()
         }
     }
     private fun saveContact(){
@@ -204,18 +178,27 @@ class AddBills : Fragment() {
 
         if (name.isEmpty()){
             binding.billNameInput.error = "Enter bill name"
+            return
         }
         if (amount.isEmpty()){
             binding.amountInput.error = "Enter bill amount"
+            return
         }
         if (frequency.isEmpty()){
             binding.frequencyInput.error = "Choose bill frequency"
+            return
         }
         if (dueDate.isEmpty()){
             binding.dueDateInput.error = "Choose bill due date"
+            return
         }
         binding.progressBar3.visibility = View.VISIBLE
-        var bill = Bill(billId = UUID.randomUUID().toString(), name= name, amount = amount.toDouble(), frequency = frequency, dueDate = dueDate.toString(), userId = userId.toString())
+        var bill = Bill(billId = UUID.randomUUID().toString(),
+            name= name,
+            amount = amount.toDouble(),
+            frequency = frequency,
+            dueDate = dueDate.toString(),
+            userId = userId.toString())
 
         billzViewModel.saveBill(bill)
         resetForm()
@@ -223,8 +206,8 @@ class AddBills : Fragment() {
     private fun resetForm() {
         binding.billNameInput.setText(Constants.EMPTY_STRING)
         binding.amountInput.setText(Constants.EMPTY_STRING)
-        binding.frequencyInput.setSelection(0)
-        binding.dueDateInput.setSelection(0)
+        binding.frequencyInput.setText(Constants.EMPTY_STRING)
+        binding.dueDateInput.setText(Constants.EMPTY_STRING)
     }
 }
 
