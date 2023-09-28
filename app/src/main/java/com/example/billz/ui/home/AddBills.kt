@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import com.example.Model.Bill
@@ -37,6 +39,8 @@ class AddBills : Fragment() {
     private var selectedFrequency: Int = 0
     private lateinit var sharedPrefs: SharedPreferences
     val billzViewModel: BillzViewModel by viewModels()
+    var selectedMonth = 0
+    var selectedDate = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,51 +63,20 @@ class AddBills : Fragment() {
         _binding = null
     }
 
+//    override fun onResume() {
+//        super.onResume()
+//        setUpFrequencySpinner()
+//    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedPrefs =
-            this.requireActivity().getSharedPreferences(Constants.PREFS_FILE, Context.MODE_PRIVATE)
+
+        sharedPrefs = this.requireActivity().getSharedPreferences(Constants.PREFS_FILE, Context.MODE_PRIVATE)
 
         val items = listOf(Constants.WEEKLY, Constants.MONTHLY, Constants.ANNUAL)
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
-        binding.frequencyInput.setAdapter(adapter)
+        binding.spFrequency.setAdapter(adapter)
 
-        val daysOfTheWeek = Array(7){it + 1}
-        val daysAdapter = ArrayAdapter(requireContext(), R.layout.list_item, daysOfTheWeek)
-
-        val daysOfTheMonth = Array(31){it + 1}
-        val monthAdapter = ArrayAdapter(requireContext(), R.layout.list_item, daysOfTheMonth)
-
-        binding.frequencyInput.setOnItemClickListener { _, _, position, _ ->
-            selectedFrequency = position
-        }
-
-        binding.dueDateInput.setOnClickListener {
-
-            when (selectedFrequency) {
-                0 -> binding.dueDateInput.setAdapter(daysAdapter)
-
-                1 -> binding.dueDateInput.setAdapter(monthAdapter)
-
-                2 -> {
-//                    binding.dueDateInput.setAdapter(null)
-                    // Show a full calendar
-                    val datePickerBuilder =
-                        MaterialDatePicker.Builder.datePicker()
-                            .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-                            .setTitleText(Calendar.getInstance().get(Calendar.YEAR).toString())
-
-                    val datePicker = datePickerBuilder.build()
-
-                    datePicker.show(childFragmentManager, null)
-                    datePicker.addOnPositiveButtonClickListener {
-                        val dateFormat = SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault())
-                        binding.dueDateInput.setText(dateFormat.format(it))
-                    }
-                }
-            }
-
-        }
         binding.addBillButton.setOnClickListener{
             binding.progressBar3.visibility = View.VISIBLE
             saveContact()
@@ -112,8 +85,8 @@ class AddBills : Fragment() {
     private fun saveContact(){
         var name = binding.billNameInput.text.toString()
         var amount = binding.amountInput.text.toString()
-        var frequency = binding.frequencyInput.text.toString()
-        var dueDate = binding.dueDateInput.text.toString()
+        var frequency = binding.tvFrequency.text.toString()
+        var dueDate = binding.tvDuedate.text.toString()
         val userId = sharedPrefs.getString(Constants.USER_ID, Constants.EMPTY_STRING)
 
         if (name.isEmpty()){
@@ -124,20 +97,27 @@ class AddBills : Fragment() {
             binding.amountInput.error = "Enter bill amount"
             return
         }
-        if (frequency.isEmpty()){
-            binding.frequencyInput.error = "Choose bill frequency"
-            return
+        if(frequency == Constants.ANNUAL){
+            var finalDate = selectedDate.toString()
+            var finalMonth = selectedMonth.toString()
+            if (selectedDate<10){
+                finalDate = "0$selectedDate"
+            }
+
+            if (selectedMonth<10){
+                finalMonth = "0$selectedMonth"
+            }
+            dueDate = "$finalDate/$finalMonth"
         }
-        if (dueDate.isEmpty()){
-            binding.dueDateInput.error = "Choose bill due date"
-            return
+        else {
+            dueDate = binding.spDateInput.selectedItem.toString()
         }
         binding.progressBar3.visibility = View.VISIBLE
         var bill = Bill(billId = UUID.randomUUID().toString(),
             name= name,
             amount = amount.toDouble(),
             frequency = frequency,
-            dueDate = dueDate.toString(),
+            dueDate = dueDate,
             userId = userId.toString())
 
         billzViewModel.saveBill(bill)
@@ -146,9 +126,83 @@ class AddBills : Fragment() {
     private fun resetForm() {
         binding.billNameInput.setText(Constants.EMPTY_STRING)
         binding.amountInput.setText(Constants.EMPTY_STRING)
-        binding.frequencyInput.setText(Constants.EMPTY_STRING)
-        binding.dueDateInput.setText(Constants.EMPTY_STRING)
+        binding.spFrequency.setSelection(0)
+        binding.spDateInput.setSelection(0)
     }
+
+    private fun setUpFrequencySpinner(){
+        val frequency =
+            arrayListOf(
+                Constants.WEEKLY, Constants.MONTHLY, Constants.ANNUAL
+            )
+        val adapter = ArrayAdapter(requireContext(), R.layout.list_item, frequency)
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spFrequency.adapter = adapter
+
+        binding.spFrequency.onItemClickListener = object: AdapterView.OnItemSelectedListener,
+            AdapterView.OnItemClickListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                when(binding.spFrequency.selectedItem.toString()){
+                    Constants.WEEKLY -> {
+                        setupDueDateSpinner(Array(7){it + 1})
+                        hideDatePicker()
+                    }
+                    Constants.MONTHLY -> {
+                        setupDueDateSpinner(Array(31){it + 1})
+                        hideDatePicker()
+                    }
+                    Constants.WEEKLY -> {
+                        showDatePicker()
+                        setupDueDate()
+                    }
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+
+            override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+            }
+        }
+
+    }
+
+    fun setupDueDateSpinner(dates: Array<Int>) {
+        val duedateAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, dates)
+        duedateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spDateInput.adapter = duedateAdapter
+    }
+    fun showDatePicker() {
+        binding.dpduedate.show()
+        binding.spDateInput.hide()
+    }
+
+    fun hideDatePicker() {
+        binding.dpduedate.hide()
+        binding.spDateInput.show()
+    }
+    fun setupDueDate() {
+        val calendar = Calendar.getInstance()
+        binding.dpduedate.init(
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+        { view, year, month, date ->
+            selectedMonth = month + 1
+            selectedDate = date
+        }
+    }
+
+}
+
+private fun View.hide() {
+    this.visibility = View.GONE
+
+}
+private fun View.show() {
+    this.visibility = View.VISIBLE
 
 }
 

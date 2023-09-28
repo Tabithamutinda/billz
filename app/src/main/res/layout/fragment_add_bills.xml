@@ -89,68 +89,69 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:id="@+id/frequencyInputLayout"
-        app:boxBackgroundColor="@color/faded"
-        android:layout_width="match_parent"
+
+    <TextView
+        android:id="@+id/tvFrequency"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:layout_marginRight="16dp"
-        app:boxCornerRadiusBottomEnd="10dp"
-        app:boxCornerRadiusBottomStart="10dp"
-        app:boxCornerRadiusTopEnd="10dp"
-        app:boxStrokeWidth="0dp"
-        app:boxStrokeWidthFocused="0dp"
-        app:boxCornerRadiusTopStart="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Bill Frequency"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/amountInputLayout"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/amountInputLayout"></TextView>
 
-        <AutoCompleteTextView
-            android:id="@+id/frequencyInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:dropDownHeight="wrap_content"
-            android:inputType="none"
-            android:hint="Bill Frequency"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/dueDateInputLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        app:boxBackgroundColor="@color/faded"
-        android:layout_width="match_parent"
+    <Spinner
+        android:id="@+id/spFrequency"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginRight="16dp"
-        app:boxCornerRadiusBottomEnd="10dp"
-        app:boxCornerRadiusBottomStart="10dp"
-        app:boxCornerRadiusTopEnd="10dp"
-        app:boxStrokeWidth="0dp"
-        app:boxStrokeWidthFocused="0dp"
-        app:boxCornerRadiusTopStart="10dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvFrequency"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.951"
+        app:layout_constraintStart_toEndOf="@+id/tvFrequency"
+        app:layout_constraintTop_toTopOf="@+id/tvFrequency"></Spinner>
+
+    <TextView
+        android:id="@+id/tvDuedate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="32dp"
+        android:text="Due Date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frequencyInputLayout"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/tvFrequency">
 
-        <AutoCompleteTextView
-            android:id="@+id/dueDateInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:dropDownHeight="wrap_content"
-            android:hint="Due Date"
-            android:inputType="none"
+    </TextView>
 
-             />
+    <Spinner
+        android:id="@+id/spDateInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:dropDownHeight="wrap_content"
+        android:hint="Bill Frequency"
+        android:inputType="none"
+        app:layout_constraintBottom_toBottomOf="@+id/tvDuedate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.92"
+        app:layout_constraintStart_toEndOf="@+id/tvDuedate"
+        app:layout_constraintTop_toTopOf="@+id/tvDuedate"
+        app:layout_constraintVertical_bias="0.71"></Spinner>
 
-    </com.google.android.material.textfield.TextInputLayout>
+    <DatePicker
+        android:id="@+id/dpduedate"
+        android:layout_width="250dp"
+        android:layout_height="380dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/tvDuedate"
+        app:layout_constraintTop_toBottomOf="@id/addBill_button"
+        app:layout_constraintVertical_bias="0.815" />
 
     <ProgressBar
         android:id="@+id/progressBar3"
