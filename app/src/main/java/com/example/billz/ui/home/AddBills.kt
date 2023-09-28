@@ -38,16 +38,8 @@ class AddBills : Fragment() {
     private lateinit var sharedPrefs: SharedPreferences
     val billzViewModel: BillzViewModel by viewModels()
 
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -59,26 +51,6 @@ class AddBills : Fragment() {
         _binding = FragmentAddBillsBinding.inflate(inflater, container, false)
         return binding.root
 
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AddBills.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AddBills().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 
     override fun onDestroyView() {
@@ -96,42 +68,10 @@ class AddBills : Fragment() {
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         binding.frequencyInput.setAdapter(adapter)
 
-        val daysOfTheWeek = listOf("1", "2", "3", "4", "5", "6", "7")
+        val daysOfTheWeek = Array(7){it + 1}
         val daysAdapter = ArrayAdapter(requireContext(), R.layout.list_item, daysOfTheWeek)
 
-        val daysOfTheMonth = listOf(
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20",
-            "21",
-            "22",
-            "23",
-            "24",
-            "25",
-            "26",
-            "27",
-            "28",
-            "29",
-            "30",
-            "31"
-        )
+        val daysOfTheMonth = Array(31){it + 1}
         val monthAdapter = ArrayAdapter(requireContext(), R.layout.list_item, daysOfTheMonth)
 
         binding.frequencyInput.setOnItemClickListener { _, _, position, _ ->
@@ -209,6 +149,7 @@ class AddBills : Fragment() {
         binding.frequencyInput.setText(Constants.EMPTY_STRING)
         binding.dueDateInput.setText(Constants.EMPTY_STRING)
     }
+
 }
 
 
