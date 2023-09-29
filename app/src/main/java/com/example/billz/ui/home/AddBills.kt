@@ -70,6 +70,7 @@ class AddBills : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpFrequencySpinner()
 
         sharedPrefs = this.requireActivity().getSharedPreferences(Constants.PREFS_FILE, Context.MODE_PRIVATE)
 
@@ -136,11 +137,10 @@ class AddBills : Fragment() {
                 Constants.WEEKLY, Constants.MONTHLY, Constants.ANNUAL
             )
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, frequency)
-
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spFrequency.adapter = adapter
 
-        binding.spFrequency.onItemClickListener = object: AdapterView.OnItemSelectedListener,
+        binding.spFrequency.onItemSelectedListener = object: AdapterView.OnItemSelectedListener,
             AdapterView.OnItemClickListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 when(binding.spFrequency.selectedItem.toString()){
@@ -152,7 +152,7 @@ class AddBills : Fragment() {
                         setupDueDateSpinner(Array(31){it + 1})
                         hideDatePicker()
                     }
-                    Constants.WEEKLY -> {
+                    Constants.ANNUAL -> {
                         showDatePicker()
                         setupDueDate()
                     }
@@ -164,6 +164,7 @@ class AddBills : Fragment() {
 
             override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
             }
+
         }
 
     }
@@ -174,24 +175,44 @@ class AddBills : Fragment() {
         binding.spDateInput.adapter = duedateAdapter
     }
     fun showDatePicker() {
-        binding.dpduedate.show()
         binding.spDateInput.hide()
     }
 
     fun hideDatePicker() {
-        binding.dpduedate.hide()
         binding.spDateInput.show()
     }
     fun setupDueDate() {
-        val calendar = Calendar.getInstance()
-        binding.dpduedate.init(
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
-        )
-        { view, year, month, date ->
-            selectedMonth = month + 1
-            selectedDate = date
+
+        // Show a full calendar
+        val datePickerBuilder =
+            MaterialDatePicker.Builder.datePicker()
+                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                .setTitleText(Calendar.getInstance().get(Calendar.YEAR).toString())
+
+        val datePicker = datePickerBuilder.build()
+
+        datePicker.show(childFragmentManager, null)
+        datePicker.addOnPositiveButtonClickListener { selectedDateInMillis ->
+            // Create a Calendar instance and set it to the selected date
+            val selectedCalendar = Calendar.getInstance()
+            selectedCalendar.timeInMillis = selectedDateInMillis
+
+            // Get the month and day from the selected date
+            val selectedMonth = selectedCalendar.get(Calendar.MONTH) // Month is 0-based (0 = January)
+            val selectedDay = selectedCalendar.get(Calendar.DAY_OF_MONTH)
+
+            // Assign the values to your class members or variables
+            this.selectedMonth = selectedMonth
+            this.selectedDate = selectedDay
+
+            // Format and display the selected date
+            val dateFormat = SimpleDateFormat("EEE, MMM d, ''yy", Locale.getDefault())
+            val selectedDateString = "$selectedMonth/$selectedDay"
+            val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, listOf(selectedDateString))
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spDateInput.adapter = adapter
+
+            binding.spDateInput.visibility = View.VISIBLE
         }
     }
 
