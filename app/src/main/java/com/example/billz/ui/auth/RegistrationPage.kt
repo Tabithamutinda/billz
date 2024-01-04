@@ -10,14 +10,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.Model.Constants
-import com.example.Model.LoginResponse
+import com.example.utils.Constants
 import com.example.Model.RegistrationRequest
 import com.example.ViewModel.UserViewModel
-import com.example.billz.R
-import com.example.billz.databinding.ActivityLoginBinding
 import com.example.billz.databinding.ActivityRegistrationBinding
-import com.example.billz.home.MainActivity
 
 class RegistrationPage : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())

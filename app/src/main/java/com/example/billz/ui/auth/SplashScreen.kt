@@ -6,11 +6,9 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.Model.Constants
+import com.example.utils.Constants
 import com.example.ViewModel.UserViewModel
 import com.example.billz.R
 import com.example.billz.home.MainActivity

@@ -10,12 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import com.example.Model.Bill
-import com.example.Model.Constants
-import com.example.ViewModel.UserViewModel
+import com.example.utils.Constants
 import com.example.billz.databinding.FragmentAddBillsBinding
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat

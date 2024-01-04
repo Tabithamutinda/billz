@@ -5,8 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.Model.Bill
+import com.example.Model.UpcomingBill
 
-@Database(entities = arrayOf(Bill::class), version = 1)
+@Database(entities = [Bill::class,  UpcomingBill :: class], version = 4)
 abstract class BillsDb : RoomDatabase(){
 
     abstract fun BillsDao() : BillsDao

@@ -1,10 +1,18 @@
 package com.example.billz
 
+import BillzViewModel
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import com.example.Api.ApiClient
+import com.example.Api.ApiInterface
+import com.example.utils.Constants
+import com.example.billz.databinding.FragmentSummaryBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,16 +25,14 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class Summary : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding: FragmentSummaryBinding? = null
+    private val binding get() = _binding!!
+    private var selectedFrequency: Int = 0
+    private lateinit var sharedPrefs: SharedPreferences
+    val billzViewModel: BillzViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -34,26 +40,41 @@ class Summary : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_summary, container, false)
+        _binding = FragmentSummaryBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Summary.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Summary().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        sharedPrefs = this.requireActivity().getSharedPreferences(Constants.PREFS_FILE, Context.MODE_PRIVATE)
+    }
+
+    fun getAllBills(){
+        val retrofit = ApiClient.buildApiClient(ApiInterface::class.java)
+        val request = retrofit.getMyBills()
+//        request.enqueue(object : Callback<List<Bill>>{
+//            override fun onResponse(call: Call<List<Bill>>, response: Response<List<Bill>>) {
+//                if (response.isSuccessful) {
+//                    val bills = response.body()
+//                    if (bills != null) {
+//                        // Process the list of bills here
+//                        Toast.makeText(context, "${bills.size} bills", Toast.LENGTH_SHORT).show()
+//                    } else {
+//                        // Handle the case where the response body is null
+//                        Toast.makeText(context, "Empty response body", Toast.LENGTH_SHORT).show()
+//                    }
+//                } else {
+//                    // Handle the case where the response is not successful
+//                    Toast.makeText(context, "Failed to get bills. Error code: ${response.code()}", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<List<Bill>>, t: Throwable) {
+//                // Handle network errors or failures here
+//                Toast.makeText(context, "Network error: ${t.message}", Toast.LENGTH_SHORT).show()
+//            }
+//        })
+
     }
 }

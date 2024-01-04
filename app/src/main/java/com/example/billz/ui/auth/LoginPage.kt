@@ -3,7 +3,6 @@ package com.example.billz.ui.auth
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.opengl.Visibility
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,10 +10,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
-import com.example.Model.Constants
+import com.example.utils.Constants
 import com.example.Model.LoginRequest
-import com.example.Model.LoginResponse
 import com.example.ViewModel.UserViewModel
 import com.example.billz.databinding.ActivityLoginBinding
 import com.example.billz.home.MainActivity
