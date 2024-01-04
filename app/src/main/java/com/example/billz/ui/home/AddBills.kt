@@ -39,8 +39,8 @@ class AddBills : Fragment() {
     private var selectedFrequency: Int = 0
     private lateinit var sharedPrefs: SharedPreferences
     val billzViewModel: BillzViewModel by viewModels()
-    var selectedMonth = 0
-    var selectedDate = 0
+    private var selectedMonth: Int = 0
+    private var selectedDate: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,7 +76,7 @@ class AddBills : Fragment() {
 
         val items = listOf(Constants.WEEKLY, Constants.MONTHLY, Constants.ANNUAL)
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
-        binding.spFrequency.setAdapter(adapter)
+        binding.spFrequency.adapter = adapter
 
         binding.addBillButton.setOnClickListener{
             binding.progressBar3.visibility = View.VISIBLE
@@ -86,8 +86,8 @@ class AddBills : Fragment() {
     private fun saveContact(){
         var name = binding.billNameInput.text.toString()
         var amount = binding.amountInput.text.toString()
-        var frequency = binding.tvFrequency.text.toString()
-        var dueDate = binding.tvDuedate.text.toString()
+        var frequency = binding.spFrequency.selectedItem.toString()
+        var date = binding.spDateInput.selectedItem.toString()
         val userId = sharedPrefs.getString(Constants.USER_ID, Constants.EMPTY_STRING)
 
         if (name.isEmpty()){
@@ -100,25 +100,26 @@ class AddBills : Fragment() {
         }
         if(frequency == Constants.ANNUAL){
             var finalDate = selectedDate.toString()
-            var finalMonth = selectedMonth.toString()
+            var finalMonth = (selectedMonth + 1).toString()
             if (selectedDate<10){
-                finalDate = "0$selectedDate"
+                finalDate = "$selectedDate"
             }
 
-            if (selectedMonth<10){
-                finalMonth = "0$selectedMonth"
+            if (selectedMonth + 1 <10){
+                finalMonth = "$selectedMonth"
             }
-            dueDate = "$finalDate/$finalMonth"
+            date = "$finalDate/$finalMonth"
         }
         else {
-            dueDate = binding.spDateInput.selectedItem.toString()
+            date = binding.spDateInput.selectedItem.toString()
+
         }
         binding.progressBar3.visibility = View.VISIBLE
         var bill = Bill(billId = UUID.randomUUID().toString(),
             name= name,
             amount = amount.toDouble(),
             frequency = frequency,
-            dueDate = dueDate,
+            dueDate = date,
             userId = userId.toString())
 
         billzViewModel.saveBill(bill)
